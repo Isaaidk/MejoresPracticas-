@@ -10,9 +10,15 @@ namespace Best_Practices.Infraestructure.DependencyInjection
 {
     public class ServicesConfiguration
     {
+        // CAMBIO: DIP - Dependency Injection Configuration
+        // POR QUÉ: Centraliza inyección de dependencias (SRP + DIP)
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IVehicleRepository, MyVehiclesRepository>();
+            // CAMBIO: InMemoryVehicleRepository reemplaza MyVehiclesRepository
+            // POR QUÉ: Cumple requisito "without database dependency"
+            // NOTA: Para cambiar a BD en futuro, usar: services.AddTransient<IVehicleRepository, SQLVehicleRepository>();
+            // VENTAJA: DIP hace el cambio trivial (solo cambiar esta línea)
+            services.AddTransient<IVehicleRepository, InMemoryVehicleRepository>();
         }
     }
 }

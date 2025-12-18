@@ -11,11 +11,15 @@ namespace Best_Practices.Infraestructure.Factories
     {
         public override Vehicle Create()
         {
-            var builder = new CarBuilder();
-            return builder
-                .SetModel("Explorer")
-                .SetColor("Black")
-                .Build();
+            // CAMBIO: VehicleBuilder nuevo reemplaza CarBuilder
+            // POR QUÉ: WithCurrentYear() + escalable para propiedades adicionales
+            var builder = new VehicleBuilder()
+                .WithBrand("Ford")
+                .WithModel("Explorer")
+                .WithColor("Black")
+                .WithCurrentYear();
+            
+            return builder.Build();
         }
     }
 }

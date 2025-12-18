@@ -35,6 +35,8 @@ namespace Best_Practices.Controllers
         }
 
         [HttpGet]
+        // CAMBIO: Factory Method Pattern - elimina lógica condicional
+        // POR QUÉ: OCP (Open/Closed) - agregar modelos sin modificar controller
         public IActionResult AddMustang()
         {
             var factory = new FordMustangCreator();
@@ -47,6 +49,17 @@ namespace Best_Practices.Controllers
         public IActionResult AddExplorer()
         {
             var factory = new FordExplorerCreator();
+            var vehicle = factory.Create();
+            _vehicleRepository.AddVehicle(vehicle);
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        // CAMBIO: Nuevo método AddEscape (requisito "Add new Escape model")
+        // POR QUÉ: Factory patrón mantiene arquitectura escalable
+        public IActionResult AddEscape()
+        {
+            var factory = new FordEscapeCreator();
             var vehicle = factory.Create();
             _vehicleRepository.AddVehicle(vehicle);
             return Redirect("/");
